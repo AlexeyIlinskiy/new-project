@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ingredientsTypes from '../../utils/types';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import BurgerIngredientsItem from '../burger-ingredients-item/burger-ingredients-item';
+import BurgerIngredientsSection from '../burger-ingredients-section/burger-ingredients-section'
 import styles from './burger-ingredients.module.css';
 
 function BurgerIngredients(props) {
@@ -27,7 +27,7 @@ function BurgerIngredients(props) {
   return (
     <section className={`${styles.root} mr-10`}>
       <h1 className={`${styles.title} text_type_main-large mt-10 mb-5`}>Соберите бургер</h1>
-      <div style={{ display: 'flex' }} className={`mb-8`}>
+      <div className={`${styles.tabs} mb-8`}>
         {
           tabs.map((item) => (
             <Tab 
@@ -44,7 +44,7 @@ function BurgerIngredients(props) {
       <div className={styles.ingredients}>
         { 
           tabs.map( item => (
-              <BurgerIngredientsItem 
+              <BurgerIngredientsSection 
                 type={item.name} 
                 key={item.name} 
                 title={item.title}

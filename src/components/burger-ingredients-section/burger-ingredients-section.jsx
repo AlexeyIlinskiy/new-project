@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import ingredientsTypes from '../../utils/types';
 
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './burger-ingredients-item.module.css';
+import styles from './burger-ingredients-section.module.css';
 
-function BurgerIngredientsItem(props) {
+function BurgerIngredientsSection(props) {
   return (
     <>
       <h2 className={`${styles.sectionTitle} text_type_main-medium mt-2 mb-6`}>{props.title}</h2>
@@ -13,7 +13,7 @@ function BurgerIngredientsItem(props) {
         {
           props.data.map((item) => (
             <li key={item._id} className={`${styles.card} mb-8`}>
-              <img src={item.image} alt=""/>
+              <img src={item.image} alt={item.name}/>
               <span className={`${styles.price} mt-2 mb-1 text_type_digits-default`}>
                 {item.price}
                 <CurrencyIcon type="primary" />
@@ -27,8 +27,8 @@ function BurgerIngredientsItem(props) {
   );
 }
 
-BurgerIngredientsItem.propTypes = { 
+BurgerIngredientsSection.propTypes = { 
   data: PropTypes.arrayOf(ingredientsTypes).isRequired
 };
 
-export default BurgerIngredientsItem;
+export default BurgerIngredientsSection;
