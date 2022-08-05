@@ -1,34 +1,62 @@
 import React from 'react';
-import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
-import AppHeader from './components/AppHeader/app-header';
-import './App.css';
+import styles from './App.module.css';
+import AppHeader from './components/app-header/app-header';
+import BurgerIngredients from './components/burger-ingredients/burger-ingredients';
+import BurgerConstructor from './components/burger-constructor/burger-constructor';
+import data from './utils/data';
 
 function App() {
   return (
-    <AppHeader />
-
-    
-    
-    
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <p>
-    //       Edit <code>src/App.tsx</code> and save to reload.
-    //     </p>
-    //     <a
-    //       className="App-link"
-    //       href="https://reactjs.org"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       Learn React
-    //     </a>
-        
-    //   </header>
-
-    // </div>
+    <div className="App">
+      <AppHeader />
+      <main className={styles.main}>
+        <BurgerIngredients ingredients={data}/>
+        <BurgerConstructor construct={data}/>
+      </main>
+    </div>
   );
 }
 
 export default App;
+
+
+// import React from 'react';
+// import styles from './App.module.css';
+// import AppHeader from './components/app-header/app-header';
+// import BurgerIngredients from './components/burger-ingredients/burger-ingredients';
+// import BurgerConstructor from './components/burger-constructor/burger-constructor';
+// import data from './utils/data';
+
+// function App() {
+//   return (
+//     <div className="App">
+//       <AppHeader />
+//       <main className={styles.main}>
+//         <BurgerIngredients ingredients={data}/>
+//         <BurgerConstructor constructor={data}/>
+//       </main>
+//     </div>
+//   );
+// }
+
+// export default App;
+
+
+
+
+
+
+// import React from 'react';
+
+// import AppHeader from './components/AppHeader/app-header';
+// import BurgerConstructor from './components/BurgerConstructor/burger-constructor';
+// import './App.css';
+
+// function App() {
+//   return (
+//     <>
+//     <AppHeader />
+//     <BurgerConstructor />
+//     </>
+
+// export default App;
