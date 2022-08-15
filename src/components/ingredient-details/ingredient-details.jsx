@@ -34,7 +34,7 @@ function IngredientDetails(props) {
 
 
 IngredientDetails.propTypes = { 
-  ingredients: PropTypes.arrayOf(ingredientsTypes).isRequired
+  currentIngredients: PropTypes.arrayOf(ingredientsTypes)
 };
 
 export default IngredientDetails;
