@@ -1,10 +1,13 @@
 import React from 'react';
+import styles from './burger-ingredients.module.css';
+
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+
 import PropTypes from 'prop-types';
 import ingredientsTypes from '../../utils/types';
 
-import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerIngredientsSection from '../burger-ingredients-section/burger-ingredients-section'
-import styles from './burger-ingredients.module.css';
+
 
 function BurgerIngredients(props) {
   const tabs = [
@@ -49,6 +52,7 @@ function BurgerIngredients(props) {
                 key={item.name} 
                 title={item.title}
                 data={props.ingredients.filter((el) => el.type === item.name )}
+                openModal={props.openModal}
               />
             )
           )

@@ -8,6 +8,7 @@ import {
   CurrencyIcon,
   DragIcon 
 } from '@ya.praktikum/react-developer-burger-ui-components';
+
 import styles from './burger-constructor.module.css';
 
 function BurgerConstructor(props) {
@@ -57,7 +58,7 @@ function BurgerConstructor(props) {
           600 
           <CurrencyIcon type="primary" />
         </span>
-        <Button type="primary" size="medium">
+        <Button type="primary" size="medium" onClick={() => props.openModal()}>
           Оформить заказ
         </Button>
       </div>

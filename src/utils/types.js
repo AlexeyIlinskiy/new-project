@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-export default PropTypes.shape({  
+export default PropTypes.shape({ 
   _id: PropTypes.string,
   name: PropTypes.string,
   type: PropTypes.string,
