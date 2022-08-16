@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import ingredientsTypes from '../../utils/types';
 
@@ -61,7 +60,7 @@ function BurgerConstructor({ ingredients, openModal}) {
           600 
           <CurrencyIcon type="primary" />
         </span>
-        <Button type="primary" size="medium" onClick={() => openModal()}>
+        <Button type="primary" size="medium" onClick={ openModal }>
           Оформить заказ
         </Button>
       </div>
@@ -71,7 +70,8 @@ function BurgerConstructor({ ingredients, openModal}) {
 
 
 BurgerConstructor.propTypes = { 
-  ingredients: PropTypes.arrayOf(ingredientsTypes).isRequired
+  ingredients: PropTypes.arrayOf(ingredientsTypes).isRequired,
+  openModal: PropTypes.func.isRequired,
 };
 
 export default BurgerConstructor;

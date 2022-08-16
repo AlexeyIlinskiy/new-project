@@ -32,14 +32,14 @@ function Modal ({header, children, onClose}) {
         <div className={`${styles.root} pt-10 pr-10 pb-15 pl-10`}>
           <div className={styles.header}>
             { header && <h2 className="text_type_main-large">{header}</h2>}
-            <button className={styles.closeButton} onClick={onClose}>
+            <button className={styles.closeButton} onClick={ onClose }>
               <CloseIcon type="primary" />
             </button>
           </div>
             {children}
         </div>
       </>
-      ), modals 
+      ), modals
   );
 };
 

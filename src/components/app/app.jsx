@@ -52,24 +52,20 @@ function App() {
         <BurgerIngredients ingredients={apiData} openModal={openIngredientModal}/>
         <BurgerConstructor ingredients={apiData} openModal={openOrderModal}/>
         { orderVisible && 
-          (
-              <Modal 
-                header=""
-                onClose={ closeModal }
-              >
-                <OrderDetails />
-              </Modal>
-          )
+          <Modal 
+            header= { '' }
+            onClose={ closeModal }
+          >
+            <OrderDetails />
+            </Modal>
         }
         { ingredientVisible && 
-          (
-              <Modal 
-                header="Детали ингредиента"
-                onClose={ closeModal }
-              >
-                <IngredientDetails currentIngredient={currentIngredient}/>
-              </Modal>
-          )
+          <Modal 
+            header="Детали ингредиента"
+            onClose={ closeModal }
+          >
+            <IngredientDetails currentIngredient={currentIngredient}/>
+          </Modal>
         }
       </main>
     </div>
