@@ -6,11 +6,11 @@ import PropTypes from 'prop-types';
 
 import { modals } from '../../utils/constants';
 
-function ModalOverlay(props) {
+function ModalOverlay({ children, onClick }) {
     return ReactDOM.createPortal(
         (
-          <div className={styles.root} onClick={props.onClick}>
-              {props.children} 
+          <div className={styles.root} onClick={onClick}>
+              {children} 
           </div>
         ), 
         modals

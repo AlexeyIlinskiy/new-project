@@ -18,24 +18,6 @@ function App() {
   const [currentIngredient, setCurrentIngredient] = React.useState({});
 
   React.useEffect(() => {
-    const close = (e) => {
-      if(e.key === "Escape"){
-        if(ingredientVisible) {
-          setIngredientVisible(false)
-        }
-        else if(orderVisible) {
-          setOrderVisible(false);
-        }
-      }
-    }
-
-    window.addEventListener('keydown', close);
-
-    return () => window.removeEventListener('keydown', close);
-
-  },[ingredientVisible, orderVisible]);
-
-  React.useEffect(() => {
     fetch(api)
         .then(res => {
           if (res.ok) {
@@ -49,17 +31,14 @@ function App() {
         });
   }, []);
 
-  const closeOrderModal = () => {
+  const closeModal = () => {
     setOrderVisible(false);
+    setIngredientVisible(false);
   };
 
   const openOrderModal = () => {
     setOrderVisible(true);
   };
-
-  const closeIngredientModal = () => {
-    setIngredientVisible(false);
-  }
 
   const openIngredientModal = (item) => {
     setCurrentIngredient({...item});
@@ -74,14 +53,20 @@ function App() {
         <BurgerConstructor construct={apiData} openModal={openOrderModal}/>
         { orderVisible && 
           (
-              <Modal onClick={closeOrderModal} header="">
+              <Modal 
+                header=""
+                onClose={ closeModal }
+              >
                 <OrderDetails />
               </Modal>
           )
         }
         { ingredientVisible && 
           (
-              <Modal onClick={closeIngredientModal} header="Детали ингредиента">
+              <Modal 
+                header="Детали ингредиента"
+                onClose={ closeModal }
+              >
                 <IngredientDetails currentIngredient={currentIngredient}/>
               </Modal>
           )

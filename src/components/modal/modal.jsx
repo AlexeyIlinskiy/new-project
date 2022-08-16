@@ -7,17 +7,32 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import ModalOverlay from '../modal-overlay/modal-overlay';
 
-function Modal(props) {
+function Modal ({header, children, onClose}) {
+
+  React.useEffect(() => {
+    const close = (e) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    }
+
+    document.addEventListener('keydown', close);
+
+    return () => {document.removeEventListener('keydown', close);}
+
+  },[]);
+  
+
     return (
-      <ModalOverlay onClick={props.onClick}>
-        <div className={`${styles.root} pt-10 pr-10 pb-15 pl-10`} onClick={e => e.stopPropagation()}>
+      <ModalOverlay onClick={onClose}>
+        <div className={`${styles.root} pt-10 pr-10 pb-15 pl-10`}>
           <div className={styles.header}>
-            { props.header && <h2 className="text_type_main-large">{props.header}</h2>}
-            <button className={styles.closeButton} onClick={props.onClick}>
+            { header && <h2 className="text_type_main-large">{header}</h2>}
+            <button className={styles.closeButton} onClick={onClose}>
               <CloseIcon type="primary" />
             </button>
           </div>
-            {props.children}
+            {children}
         </div>
       </ModalOverlay>
   );
@@ -26,7 +41,7 @@ function Modal(props) {
 Modal.propTypes = {
   header: PropTypes.string,
   children: PropTypes.node.isRequired,
-  onClick: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired
 }
 
 export default Modal;
