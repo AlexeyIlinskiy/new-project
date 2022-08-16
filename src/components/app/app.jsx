@@ -50,7 +50,7 @@ function App() {
       <AppHeader />
       <main className={styles.main}>
         <BurgerIngredients ingredients={apiData} openModal={openIngredientModal}/>
-        <BurgerConstructor construct={apiData} openModal={openOrderModal}/>
+        <BurgerConstructor ingredients={apiData} openModal={openOrderModal}/>
         { orderVisible && 
           (
               <Modal 

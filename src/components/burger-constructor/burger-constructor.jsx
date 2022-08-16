@@ -11,7 +11,10 @@ import {
 
 import styles from './burger-constructor.module.css';
 
-function BurgerConstructor(props) {
+function BurgerConstructor({ ingredients, openModal}) {
+  
+  const toppings = ingredients.filter(item => item.type === 'main' || item.type === 'sauce');
+  
   return (
     <section className={styles.root}>
       <div className={`${styles.container} `}>
@@ -27,9 +30,9 @@ function BurgerConstructor(props) {
         </div>
         <div className={`${styles.scrollable} mb-4 pr-4`}>
           {
-            props.construct.slice(1, -1).map(item => 
+            toppings.map((item) => 
               (
-                <div className={`${styles.item} mb-4`} key={item.name}>
+                <div className={`${styles.item} mb-4`} key={item._id}>
                   <DragIcon type="primary" />
                   <ConstructorElement
                     isLocked={false}
@@ -58,7 +61,7 @@ function BurgerConstructor(props) {
           600 
           <CurrencyIcon type="primary" />
         </span>
-        <Button type="primary" size="medium" onClick={() => props.openModal()}>
+        <Button type="primary" size="medium" onClick={() => openModal()}>
           Оформить заказ
         </Button>
       </div>
@@ -68,7 +71,7 @@ function BurgerConstructor(props) {
 
 
 BurgerConstructor.propTypes = { 
-  construct: PropTypes.arrayOf(ingredientsTypes).isRequired
+  ingredients: PropTypes.arrayOf(ingredientsTypes).isRequired
 };
 
 export default BurgerConstructor;
