@@ -5,7 +5,7 @@ import ingredientsTypes from '../../utils/types';
 
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-function BurgerIngredientsSection(props) {
+export default function BurgerIngredientsSection(props) {
   return (
     <>
       <h2 className={`${styles.sectionTitle} text_type_main-medium mt-2 mb-6`}>{props.title}</h2>
@@ -30,5 +30,3 @@ function BurgerIngredientsSection(props) {
 BurgerIngredientsSection.propTypes = { 
   data: PropTypes.arrayOf(ingredientsTypes).isRequired
 };
-
-export default BurgerIngredientsSection;

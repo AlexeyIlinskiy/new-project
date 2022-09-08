@@ -2,7 +2,7 @@ import styles from './order-details.module.css';
 
 import doneImg from '../../images/done.svg';
 
-function OrderDetails() {
+export default function OrderDetails() {
   return (
     <section className={`${styles.root}`}>
       <span className={`${styles.title} text_type_digits-large mt-4 mb-8`}>034536</span>
@@ -13,5 +13,3 @@ function OrderDetails() {
     </section>
   )
 };
-
-export default OrderDetails;

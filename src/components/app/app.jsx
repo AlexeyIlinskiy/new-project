@@ -10,7 +10,7 @@ import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
-import { getIngredients } from '../../utils/burger-api';
+import getIngredients from '../../utils/burger-api';
 
 function App() {
   const [ingredients, setIngredients] = useState([]);

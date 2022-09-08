@@ -10,7 +10,7 @@ import {
 
 import styles from './burger-constructor.module.css';
 
-function BurgerConstructor({ ingredients, openModal}) {
+export default function BurgerConstructor({ ingredients, openModal}) {
   
   const toppings = ingredients.filter(item => item.type === 'main' || item.type === 'sauce');
   
@@ -73,5 +73,3 @@ BurgerConstructor.propTypes = {
   ingredients: PropTypes.arrayOf(ingredientsTypes).isRequired,
   openModal: PropTypes.func.isRequired,
 };
-
-export default BurgerConstructor;

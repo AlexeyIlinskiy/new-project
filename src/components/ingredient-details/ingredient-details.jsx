@@ -2,7 +2,7 @@ import styles from './ingredient-details.module.css';
 
 import ingredientsTypes from '../../utils/types';
 
-function IngredientDetails({ currentIngredient }) {
+export default function IngredientDetails({ currentIngredient }) {
 
   return (
     <section className={styles.root}>
@@ -34,5 +34,3 @@ function IngredientDetails({ currentIngredient }) {
 IngredientDetails.propTypes = { 
   currentIngredient: ingredientsTypes.isRequired
 };
-
-export default IngredientDetails;
