@@ -1,18 +1,22 @@
+import React from 'react';
 import styles from './burger-ingredients-section.module.css';
 
 import PropTypes from 'prop-types';
 import ingredientsTypes from '../../utils/types';
 
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { IngredientsContext } from '../../services/ingredientsContext';
 
-export default function BurgerIngredientsSection(props) {
+export default function BurgerIngredientsSection({ type, title, openModal }) {
+
+    const ingredients = React.useContext(IngredientsContext);
+
   return (
     <>
-      <h2 className={`${styles.sectionTitle} text_type_main-medium mt-2 mb-6`}>{props.title}</h2>
+      <h2 className={`${styles.sectionTitle} text_type_main-medium mt-2 mb-6`}>{title}</h2>
       <ul className={`${styles.cardContainer} pl-4 pr-2`}>
-        {
-          props.data.map((item) => (
-            <li key={item._id} className={`${styles.card} mb-8`} onClick={() => props.openModal(item)}>
+        { ingredients.filter(elem => elem.type === type).map((item) => (
+            <li key={item._id} className={`${styles.card} mb-8`} onClick={() => openModal(item)}>
               <img src={item.image} alt={item.name}/>
               <span className={`${styles.price} mt-2 mb-1 text_type_digits-default`}>
                 {item.price}
@@ -28,5 +32,7 @@ export default function BurgerIngredientsSection(props) {
 }
 
 BurgerIngredientsSection.propTypes = { 
-  data: PropTypes.arrayOf(ingredientsTypes).isRequired
+  type: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  openModal: PropTypes.func.isRequired
 };

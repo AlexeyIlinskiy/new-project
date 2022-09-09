@@ -8,6 +8,8 @@ import {
   DragIcon 
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import { IngredientsContext } from '../../services/ingredientsContext';
+
 import styles from './burger-constructor.module.css';
 
 export default function BurgerConstructor({ ingredients, openModal}) {

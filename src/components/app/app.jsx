@@ -12,6 +12,8 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 
 import getIngredients from '../../utils/burger-api';
 
+import { IngredientsContext } from '../../services/ingredientsContext';
+
 function App() {
   const [ingredients, setIngredients] = useState([]);
   const [orderVisible, setOrderVisible] = useState(false);
@@ -42,8 +44,10 @@ function App() {
     <div className="app">
       <AppHeader />
       <main className={styles.main}>
-        <BurgerIngredients ingredients={ingredients} openModal={openIngredientModal}/>
-        <BurgerConstructor ingredients={ingredients} openModal={openOrderModal}/>
+        <IngredientsContext.Provider value={ingredients}>
+          <BurgerIngredients ingredients={ingredients} openModal={openIngredientModal}/>
+          <BurgerConstructor ingredients={ingredients} openModal={openOrderModal}/>
+        </IngredientsContext.Provider>
         { orderVisible && 
           <Modal 
             header= { '' }
