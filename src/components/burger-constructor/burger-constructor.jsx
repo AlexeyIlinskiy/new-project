@@ -8,26 +8,27 @@ import {
   DragIcon 
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { IngredientsContext } from '../../services/ingredientsContext';
+//import { IngredientsContext } from '../../services/ingredientsContext';
 
 import styles from './burger-constructor.module.css';
 
 export default function BurgerConstructor({ ingredients, openModal}) {
   
+  const bun = ingredients.find((item) => item.type === 'bun');
   const toppings = ingredients.filter(item => item.type === 'main' || item.type === 'sauce');
-  
+
   return (
     <section className={styles.root}>
       <div className={`${styles.container} `}>
         <div className={`${styles.item} mb-4 pr-8`}>
         <div className={`${styles.iconEmpty}`}></div>
-          <ConstructorElement
+         {bun && <ConstructorElement
             type="top"
             isLocked={true}
-            text="Краторная булка N-200i (верх)"
-            price="200"
-            thumbnail="https://code.s3.yandex.net/react/code/bun-02.png"
-          />
+            text={`${bun.name} (верх)`}
+            price={bun.price}
+            thumbnail={bun.image}
+          />}
         </div>
         <div className={`${styles.scrollable} mb-4 pr-4`}>
           {
@@ -48,13 +49,15 @@ export default function BurgerConstructor({ ingredients, openModal}) {
         </div>
         <div className={`${styles.item} mb-4 pr-8`}>
         <div className={`${styles.iconEmpty}`}></div>
-          <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text="Краторная булка N-200i (низ)"
-            price="200"
-            thumbnail="https://code.s3.yandex.net/react/code/bun-02.png"
+          {
+            bun && <ConstructorElement
+              type="bottom"
+              isLocked={true}
+              text={`${bun.name} (верх)`}
+              price={bun.price}
+              thumbnail={bun.image}
           />
+          }
         </div>
       </div>
       <div className={`${styles.total} mt-10 pr-8`}>
