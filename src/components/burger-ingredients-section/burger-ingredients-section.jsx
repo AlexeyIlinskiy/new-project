@@ -1,4 +1,4 @@
-import React from 'react';
+import {useContext} from 'react';
 import styles from './burger-ingredients-section.module.css';
 
 import PropTypes from 'prop-types';
@@ -9,7 +9,7 @@ import { IngredientsContext } from '../../services/ingredientsContext';
 
 export default function BurgerIngredientsSection({ type, title, openModal }) {
 
-    const ingredients = React.useContext(IngredientsContext);
+    const ingredients = useContext(IngredientsContext);
 
   return (
     <>

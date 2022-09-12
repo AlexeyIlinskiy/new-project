@@ -16,7 +16,7 @@ const initialState = {
   total: 0
 }
 
-export default function Total ({openModal}) { 
+export default function Total ({openOrderDetails}) { 
 
   const ingredients = useContext(IngredientsContext);
   
@@ -50,7 +50,7 @@ useEffect(() => {
         {state.total} 
         <CurrencyIcon type="primary" />
       </span>
-      <Button type="primary" size="medium" onClick={ openModal }>
+      <Button type="primary" size="medium" onClick={ openOrderDetails }>
         Оформить заказ
       </Button>
     </div>
@@ -58,5 +58,5 @@ useEffect(() => {
 }
 
 Total.propTypes = { 
-  openModal: PropTypes.func.isRequired,
+  openOrderDetails: PropTypes.func.isRequired,
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import {useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import styles from './modal.module.css';
 
@@ -11,7 +11,7 @@ import { modals } from '../../utils/constants';
 
 export default function Modal ({header, children, onClose}) {
 
-  React.useEffect(() => {
+  useEffect(() => {
     const close = (e) => {
       e.key === 'Escape' && onClose();
     }

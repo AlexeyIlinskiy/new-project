@@ -9,7 +9,7 @@ import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
-import getIngredients from '../../utils/burger-api';
+import {getIngredients, getOrderNumber} from '../../utils/burger-api';
 
 import { IngredientsContext } from '../../services/ingredientsContext';
 
@@ -18,6 +18,7 @@ function App() {
   const [orderVisible, setOrderVisible] = useState(false);
   const [ingredientVisible, setIngredientVisible] = useState(false);
   const [currentIngredient, setCurrentIngredient] = useState({});
+  const [orderNumber, setOrderNumber] = useState();
 
   useEffect(()=>{
     getIngredients()
@@ -39,20 +40,29 @@ function App() {
     setIngredientVisible(true);
   }
 
+  const createOrder = (order) => {
+    getOrderNumber(order)
+      .then((data) => {
+        openOrderModal();
+        setOrderNumber(data);
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <div className="app">
       <AppHeader />
       <main className={styles.main}>
         <IngredientsContext.Provider value={ingredients}>
           <BurgerIngredients ingredients={ingredients} openModal={openIngredientModal}/>
-          <BurgerConstructor ingredients={ingredients} openModal={openOrderModal}/>
+          <BurgerConstructor ingredients={ingredients} openOrderDetails={createOrder}/>
         </IngredientsContext.Provider>
         { Boolean(orderVisible) && 
           <Modal 
             header= { '' }
             onClose={ closeModal }
           >
-            <OrderDetails />
+            <OrderDetails orderNumber={orderNumber}/>
             </Modal>
         }
         { Boolean(ingredientVisible) && 

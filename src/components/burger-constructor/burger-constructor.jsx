@@ -18,7 +18,7 @@ const initialState = {
   toppings: []
 }
 
-export default function BurgerConstructor({openModal}) {
+export default function BurgerConstructor({openOrderDetails}) {
   
   const ingredients = useContext(IngredientsContext);
   
@@ -42,6 +42,12 @@ export default function BurgerConstructor({openModal}) {
       {type: 'CREATE_CART'}
     )
   }, [ingredients]);
+
+
+  const openOrder = () => {
+    const orderData = [bun, ...toppings].map((item) => item._id);
+    openOrderDetails(orderData);
+  };
   
   return (
     <section className={styles.root}>
@@ -86,11 +92,12 @@ export default function BurgerConstructor({openModal}) {
           }
         </div>
       </div>
-      <Total openModal={openModal}/>
+      <Total openOrderDetails={openOrder}/>
     </section>
   );
 }
 
 BurgerConstructor.propTypes = { 
-  ingredients: PropTypes.arrayOf(ingredientsTypes).isRequired
+  ingredients: PropTypes.arrayOf(ingredientsTypes).isRequired,
+  openOrderDetails: PropTypes.func.isRequired,
 };
