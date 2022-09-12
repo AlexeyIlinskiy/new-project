@@ -1,4 +1,3 @@
-import React from 'react';
 import { useState, useEffect } from 'react';
 import styles from './app.module.css';
 
@@ -48,7 +47,7 @@ function App() {
           <BurgerIngredients ingredients={ingredients} openModal={openIngredientModal}/>
           <BurgerConstructor ingredients={ingredients} openModal={openOrderModal}/>
         </IngredientsContext.Provider>
-        { orderVisible && 
+        { Boolean(orderVisible) && 
           <Modal 
             header= { '' }
             onClose={ closeModal }
@@ -56,7 +55,7 @@ function App() {
             <OrderDetails />
             </Modal>
         }
-        { ingredientVisible && 
+        { Boolean(ingredientVisible) && 
           <Modal 
             header="Детали ингредиента"
             onClose={ closeModal }

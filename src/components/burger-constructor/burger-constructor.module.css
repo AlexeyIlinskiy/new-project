@@ -30,21 +30,6 @@
 	border-radius: 6px;
 }
 
-.total {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-.totalSum {
-  display: flex;
-  align-items: center;
-}
-
-.totalSum svg {
-  margin-left: 9px;
-}
-
 .item {
   display: flex;
   align-items: center;

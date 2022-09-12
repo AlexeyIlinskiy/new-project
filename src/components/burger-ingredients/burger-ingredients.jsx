@@ -1,31 +1,21 @@
-import React from 'react';
+import { useState, useContext } from 'react';
 import styles from './burger-ingredients.module.css';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import PropTypes from 'prop-types';
 import ingredientsTypes from '../../utils/types';
+import { tabs } from '../../utils/constants';
 
 import BurgerIngredientsSection from '../burger-ingredients-section/burger-ingredients-section'
+import {IngredientsContext} from '../../services/ingredientsContext';
 
 
-function BurgerIngredients(props) {
-  const tabs = [
-    {
-      name: 'bun',
-      title: 'Булки',
-    },
-    {
-      name: 'sauce',
-      title: 'Соусы',
-    },
-    {
-      name: 'main',
-      title: 'Начинки',
-    },
-  ]
+function BurgerIngredients({openModal}) {
   
-  const [current, setCurrent] = React.useState(tabs[0].name);
+  const ingredients = useContext(IngredientsContext);
+  
+  const [current, setCurrent] = useState(tabs[0].name);
 
   return (
     <section className={`${styles.root} mr-10`}>
@@ -36,7 +26,7 @@ function BurgerIngredients(props) {
             <Tab 
               value={item.name} 
               active={current === item.name} 
-              onClick={setCurrent} 
+              onClick={setCurrent}
               key={item.name}
             >
               {item.title}
@@ -51,8 +41,8 @@ function BurgerIngredients(props) {
                 type={item.name} 
                 key={item.name} 
                 title={item.title}
-                data={props.ingredients.filter((el) => el.type === item.name )}
-                openModal={props.openModal}
+                data={ingredients.filter((el) => el.type === item.name )}
+                openModal={openModal}
               />
             )
           )
@@ -63,7 +53,8 @@ function BurgerIngredients(props) {
 }
 
 BurgerIngredients.propTypes = { 
-  ingredients: PropTypes.arrayOf(ingredientsTypes).isRequired
+  ingredients: PropTypes.arrayOf(ingredientsTypes).isRequired,
+  openModal: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredients;
