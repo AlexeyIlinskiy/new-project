@@ -13,7 +13,7 @@ import {getIngredients, getOrderNumber} from '../../utils/burger-api';
 
 import { IngredientsContext } from '../../services/ingredientsContext';
 
-function App() {
+const App = () => {
   const [ingredients, setIngredients] = useState([]);
   const [orderVisible, setOrderVisible] = useState(false);
   const [ingredientVisible, setIngredientVisible] = useState(false);
@@ -23,8 +23,9 @@ function App() {
   useEffect(()=>{
     getIngredients()
     .then(setIngredients)
-    .catch((e) => alert ('Ошибка: ' + e.message));
-  }, []);
+  //  .then(console.log(getIngredients))
+   .catch((err) => console.log ('Ошибка: ' + err.message));
+ }, []);
 
   const closeModal = () => {
     setOrderVisible(false);
@@ -54,8 +55,8 @@ function App() {
       <AppHeader />
       <main className={styles.main}>
         <IngredientsContext.Provider value={ingredients}>
-          <BurgerIngredients ingredients={ingredients} openModal={openIngredientModal}/>
-          <BurgerConstructor ingredients={ingredients} openOrderDetails={createOrder}/>
+          <BurgerIngredients openModal={openIngredientModal}/>
+          <BurgerConstructor openOrderDetails={createOrder}/>
         </IngredientsContext.Provider>
         { Boolean(orderVisible) && 
           <Modal 

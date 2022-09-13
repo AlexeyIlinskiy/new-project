@@ -2,7 +2,6 @@ import { useContext, useEffect, useReducer } from 'react';
 import styles from './burger-constructor.module.css';
 
 import PropTypes from 'prop-types';
-import ingredientsTypes from '../../utils/types';
 
 import { 
   ConstructorElement, 
@@ -85,7 +84,7 @@ export default function BurgerConstructor({openOrderDetails}) {
             state.bun && <ConstructorElement
               type="bottom"
               isLocked={true}
-              text={`${state.bun.name} (верх)`}
+              text={`${state.bun.name} (низ)`}
               price={state.bun.price}
               thumbnail={state.bun.image}
           />
@@ -98,6 +97,5 @@ export default function BurgerConstructor({openOrderDetails}) {
 }
 
 BurgerConstructor.propTypes = { 
-  ingredients: PropTypes.arrayOf(ingredientsTypes).isRequired,
   openOrderDetails: PropTypes.func.isRequired,
 };

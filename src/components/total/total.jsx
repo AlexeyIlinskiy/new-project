@@ -1,7 +1,6 @@
 import { useContext, useReducer, useEffect } from "react"
 import styles from './total.module.css';
 
-import ingredientsTypes from '../../utils/types';
 import PropTypes from 'prop-types';
 
 import { 

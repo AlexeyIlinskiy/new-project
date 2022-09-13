@@ -20,7 +20,7 @@ export default function Modal ({header, children, onClose}) {
 
     return () => {document.removeEventListener('keydown', close);}
 
-  },[]);
+  },[onClose]);
   
 
     return ReactDOM.createPortal (
