@@ -23,7 +23,6 @@ const App = () => {
   useEffect(()=>{
     getIngredients()
     .then(setIngredients)
-  //  .then(console.log(getIngredients))
    .catch((err) => console.log ('Ошибка: ' + err.message));
  }, []);
 
