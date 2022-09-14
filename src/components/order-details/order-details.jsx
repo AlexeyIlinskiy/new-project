@@ -2,10 +2,10 @@ import styles from './order-details.module.css';
 
 import doneImg from '../../images/done.svg';
 
-function OrderDetails() {
+export default function OrderDetails({orderNumber}) {
   return (
     <section className={`${styles.root}`}>
-      <span className={`${styles.title} text_type_digits-large mt-4 mb-8`}>034536</span>
+      <span className={`${styles.title} text_type_digits-large mt-4 mb-8`}>{orderNumber}</span>
       <p className={`${styles.subTitle} text_type_main-medium mb-15`}>идентификатор заказа</p>
       <img src={doneImg} alt="Заказ принят" className="mb-15"/>
       <p className={`${styles.orderInfo} text_type_main-default mb-2`}>Ваш заказ начали готовить</p>
@@ -13,5 +13,3 @@ function OrderDetails() {
     </section>
   )
 };
-
-export default OrderDetails;

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import styles from './app.module.css';
 
 import AppHeader from '../app-header/app-header';
@@ -9,27 +9,22 @@ import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
-import {api} from '../../utils/constants'
+import {getIngredients, getOrderNumber} from '../../utils/burger-api';
 
-function App() {
-  const [apiData, setApiData] = React.useState([]);
-  const [orderVisible, setOrderVisible] = React.useState(false);
-  const [ingredientVisible, setIngredientVisible] = React.useState(false);
-  const [currentIngredient, setCurrentIngredient] = React.useState({});
+import { IngredientsContext } from '../../services/ingredientsContext';
 
-  React.useEffect(() => {
-    fetch(api)
-        .then(res => {
-          if (res.ok) {
-              return res.json();
-          }
-          return Promise.reject(`Ошибка ${res.status}`);
-        })
-        .then(data => setApiData(data.data))
-        .catch(e => {
-          console.log('Error: ' + e.message);
-        });
-  }, []);
+const App = () => {
+  const [ingredients, setIngredients] = useState([]);
+  const [orderVisible, setOrderVisible] = useState(false);
+  const [ingredientVisible, setIngredientVisible] = useState(false);
+  const [currentIngredient, setCurrentIngredient] = useState({});
+  const [orderNumber, setOrderNumber] = useState();
+
+  useEffect(()=>{
+    getIngredients()
+    .then(setIngredients)
+   .catch((err) => console.log ('Ошибка: ' + err.message));
+ }, []);
 
   const closeModal = () => {
     setOrderVisible(false);
@@ -45,21 +40,32 @@ function App() {
     setIngredientVisible(true);
   }
 
+  const createOrder = (order) => {
+    getOrderNumber(order)
+      .then((data) => {
+        openOrderModal();
+        setOrderNumber(data);
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <div className="app">
       <AppHeader />
       <main className={styles.main}>
-        <BurgerIngredients ingredients={apiData} openModal={openIngredientModal}/>
-        <BurgerConstructor ingredients={apiData} openModal={openOrderModal}/>
-        { orderVisible && 
+        <IngredientsContext.Provider value={ingredients}>
+          <BurgerIngredients openModal={openIngredientModal}/>
+          <BurgerConstructor openOrderDetails={createOrder}/>
+        </IngredientsContext.Provider>
+        { Boolean(orderVisible) && 
           <Modal 
             header= { '' }
             onClose={ closeModal }
           >
-            <OrderDetails />
+            <OrderDetails orderNumber={orderNumber}/>
             </Modal>
         }
-        { ingredientVisible && 
+        { Boolean(ingredientVisible) && 
           <Modal 
             header="Детали ингредиента"
             onClose={ closeModal }
