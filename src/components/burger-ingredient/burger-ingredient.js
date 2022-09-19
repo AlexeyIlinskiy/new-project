@@ -11,10 +11,10 @@ function BurgerIngredient ({element, onClick}) {
 
   const counter = useMemo(() => {
     return (
-      constructorIngredients.filter((item) => item.type === 'bun' && item._id === element._id).length 
-      || constructorIngredients.filter((item) => item._id === element._id).length
+      constructorIngredients.filter((item) => item._id === element._id).length
     );
   }, [constructorIngredients]);
+
 
   const [, dragRef] = useDrag({
     type: 'ingredient',
@@ -30,8 +30,7 @@ function BurgerIngredient ({element, onClick}) {
       ref={ dragRef }
       draggable = {true}
     >
-      {counter !== 0 ? (<Counter count={ counter } size="default" />) 
-        : (<Counter count={ null } size="undefined" />)}
+      {counter !== 0 && (<Counter count={ counter } size="default" />)}
       <img src={element.image} className={ styles.image } alt={ element.name } />
       <p className={ styles.price }>
         <span className='text text_type_digits-default'>{ element.price }</span>

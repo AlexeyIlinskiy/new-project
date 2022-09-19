@@ -31,8 +31,3 @@ export default function IngredientDetails() {
     </section>
   )
 };
-
-
-IngredientDetails.propTypes = { 
-  currentIngredient: ingredientsTypes.isRequired
-};

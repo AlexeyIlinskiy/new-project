@@ -5,7 +5,7 @@ import {
 } from '../actions/constructor';
 
 const initialConstructorState = {
-  constructorIngredients: []
+  constructorIngredients: [],
 };
 
 const constructorReducer = (state = initialConstructorState, action) => {

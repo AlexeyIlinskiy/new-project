@@ -18,4 +18,8 @@ export const getOrderNumber = (data) => fetch(`${BURGER_API_URL}/orders`, {
     }),
   })
   .then(checkResponse)
-  .then((data) => data.order)
+  .then(data => {
+    if (data?.success) return data.order
+    return Promise.reject(data)});
+
+  

@@ -65,11 +65,13 @@ const App = () => {
 
   return (
     <div className="app">
-      <DndProvider backend={HTML5Backend}>
+      
         <AppHeader />
         <main className={styles.main}>
+        <DndProvider backend={HTML5Backend}>
           <BurgerIngredients openModal={openIngredientModal} />
           <BurgerConstructor openOrderDetails={createOrder} />
+        </DndProvider>
         { Boolean(orderVisible) && 
           <Modal 
             header= { '' }
@@ -88,7 +90,7 @@ const App = () => {
           </Modal>
         }
       </main>
-      </DndProvider>
+      
     </div>
   );
 };
