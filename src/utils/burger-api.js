@@ -4,9 +4,8 @@ const checkResponse = (res) => {
   return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 };
 
-export const getIngredients = () => fetch(`${BURGER_API_URL}/ingredients`)
+export const getIngredientsApi = () => fetch(`${BURGER_API_URL}/ingredients`)
   .then(checkResponse)
-  .then((data) => data.data)
 
 
 export const getOrderNumber = (data) => fetch(`${BURGER_API_URL}/orders`, {
@@ -19,4 +18,4 @@ export const getOrderNumber = (data) => fetch(`${BURGER_API_URL}/orders`, {
     }),
   })
   .then(checkResponse)
-  .then((data) => data.order.number)
+  .then((data) => data.order)

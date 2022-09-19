@@ -15,8 +15,12 @@ display: flex;
 }
 
 .ingredients {
-  flex: 1;
-  overflow-y: auto;
+  list-style: none;
+  justify-self: left;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-y: scroll;
 }
 
 .ingredients::-webkit-scrollbar {

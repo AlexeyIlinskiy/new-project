@@ -1,94 +1,93 @@
-import { useContext, useEffect, useReducer } from 'react';
 import styles from './burger-constructor.module.css';
-
+import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
+import { useDispatch,useSelector } from 'react-redux';
+import { useDrop } from 'react-dnd';
 
-import { 
-  ConstructorElement, 
-  DragIcon 
-} from '@ya.praktikum/react-developer-burger-ui-components';
-
-import { IngredientsContext } from '../../services/ingredientsContext';
+import { ADD_INGREDIENT_TO_CONSTRUCTOR,
+  DELETE_INGREDIENT_FROM_CONSTRUCTOR }
+  from '../../services/actions/constructor';
 
 import Total from '../total/total';
+import BurgerConstructorItem from '../burger-constructor-item/burger-constructor-item';
 
-const initialState = {
-  bun: {},
-  toppings: []
-}
-
-export default function BurgerConstructor({openOrderDetails}) {
+function BurgerConstructor ({ openOrderDetails }) {
+  const dispatch = useDispatch();
   
-  const ingredients = useContext(IngredientsContext);
-  
-  const bun = ingredients.find((item) => item.type === 'bun');
-  const toppings = ingredients.filter(item => item.type === 'main' || item.type === 'sauce');
+  const constructorIngredients = useSelector((store) => store.constructorReducer.constructorIngredients);
+  const burgerBun = constructorIngredients.filter((item) => item.type === 'bun');
 
-  //создадим функцию редьюсер
-  function reducer (state, action) {
-    switch(action.type) {
-      case 'CREATE_CART':
-        return { ...state, bun, toppings};
-      default:
-        throw new Error(`Wrong type of action: ${action.type}`);
+  const [, dropTarget] = useDrop({
+    accept: "ingredient",
+    drop(item) {
+      if(item.type === 'bun') { 
+        for(let i = 0; i < 2; i++) {
+          if(burgerBun.length > 0) {
+            let id = burgerBun[0]._id;  
+            dispatch({
+              type: DELETE_INGREDIENT_FROM_CONSTRUCTOR,
+              id: id
+            });
+          }
+          dispatch({
+            type: ADD_INGREDIENT_TO_CONSTRUCTOR,
+            draggedIngredient: item
+          });
+        }
       }
-    }
-
-  const [state, dispatch] = useReducer(reducer, initialState);
-  
-  useEffect(() => {
-    dispatch (
-      {type: 'CREATE_CART'}
-    )
-  }, [ingredients]);
-
+      else {
+        dispatch({
+          type: ADD_INGREDIENT_TO_CONSTRUCTOR,
+          draggedIngredient: item
+        });
+      }
+    },
+  });
 
   const openOrder = () => {
-    const orderData = [bun, ...toppings].map((item) => item._id);
-    openOrderDetails(orderData);
+    openOrderDetails(constructorIngredients);
   };
-  
+
   return (
-    <section className={styles.root}>
-      <div className={`${styles.container} `}>
+    <section className={styles.root} >
+      <div className={`${styles.container} `} ref={dropTarget} >
         <div className={`${styles.item} mb-4 pr-8`}>
-        <div className={`${styles.iconEmpty}`}></div>
-         {state.bun && <ConstructorElement
-            type="top"
-            isLocked={true}
-            text={`${state.bun.name} (верх)`}
-            price={state.bun.price}
-            thumbnail={state.bun.image}
-          />}
+        {
+          burgerBun.length > 0 && (
+            <div className={`${styles.item} mb-4 pr-8`}>
+              <ConstructorElement
+                type="top"
+                isLocked={true}
+                text={burgerBun[0].name}
+                price={burgerBun[0].price}
+                thumbnail={burgerBun[0].image}
+              />
+            </div>
+          )
+        }
         </div>
         <div className={`${styles.scrollable} mb-4 pr-4`}>
-          { state.toppings.length === 0 ? 'Добавьте ингредиенты' :
-            state.toppings.map((item) => 
-              (
-                <div className={`${styles.item} mb-4`} key={item._id}>
-                  <DragIcon type="primary" />
-                  <ConstructorElement
-                    isLocked={false}
-                    text={item.name}
-                    price={item.price}
-                    thumbnail={item.image}
-                  />
-                </div>
+        {
+            constructorIngredients.map((item,index) => item.type !== 'bun' && (
+                <BurgerConstructorItem item={item} key={index} index={index}/>
               )
             )
           }
         </div>
         <div className={`${styles.item} mb-4 pr-8`}>
-        <div className={`${styles.iconEmpty}`}></div>
-          {
-            state.bun && <ConstructorElement
-              type="bottom"
-              isLocked={true}
-              text={`${state.bun.name} (низ)`}
-              price={state.bun.price}
-              thumbnail={state.bun.image}
-          />
-          }
+        {
+          burgerBun.length > 0 && (
+            <div className={`${styles.item} mb-4 pr-8`}>
+              <ConstructorElement
+                type="bottom"
+                isLocked={true}
+                text={burgerBun[0].name}
+                price={burgerBun[0].price}
+                thumbnail={burgerBun[0].image}
+              />
+            </div>
+          )
+        }
         </div>
       </div>
       <Total openOrderDetails={openOrder}/>
@@ -99,3 +98,5 @@ export default function BurgerConstructor({openOrderDetails}) {
 BurgerConstructor.propTypes = { 
   openOrderDetails: PropTypes.func.isRequired,
 };
+
+export default BurgerConstructor;

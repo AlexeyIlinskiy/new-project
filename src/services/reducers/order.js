@@ -2,7 +2,7 @@ import {
   GET_ORDER_REQUEST,
   GET_ORDER_FAILED,
   GET_ORDER_SUCCESS
- } from '../actions/actions';
+ } from '../actions/order';
 
 const initialOrderState = {
   order: { 
@@ -28,7 +28,7 @@ const initialOrderState = {
       return {
         ...state,
         // Запрос выполнился успешно, помещаем полученные данные в хранилище
-        order: action.order.number,
+        order: action.order,
         // Запрос закончил своё выполнение
         orderRequest: false
       };

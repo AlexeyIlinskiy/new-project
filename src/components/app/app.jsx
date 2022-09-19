@@ -1,72 +1,86 @@
-import { useState, useEffect } from 'react';
 import styles from './app.module.css';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
-import {getIngredients, getOrderNumber} from '../../utils/burger-api';
+ import {getIngredients} from '../../services/actions/ingredients';
+ 
+ import {
+  GET_ORDER_FAILED,
+  getOrder
+} from '../../services/actions/order';
 
-import { IngredientsContext } from '../../services/ingredientsContext';
+import {
+  ADD_INGREDIENT_DATA,
+  DELETE_INGREDIENT_DATA
+} from '../../services/actions/ingredient';
+
+import {
+  OPEN_INGREDIENT_DETAILS,
+  CLOSE_INGREDIENT_DETAILS,
+  OPEN_ORDER_DETAILS,
+  CLOSE_ORDER_DETAILS
+} from '../../services/actions/modals';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const App = () => {
-  const [ingredients, setIngredients] = useState([]);
-  const [orderVisible, setOrderVisible] = useState(false);
-  const [ingredientVisible, setIngredientVisible] = useState(false);
-  const [currentIngredient, setCurrentIngredient] = useState({});
-  const [orderNumber, setOrderNumber] = useState();
+  const dispatch = useDispatch();
 
-  useEffect(()=>{
-    getIngredients()
-    .then(setIngredients)
-   .catch((err) => console.log ('Ошибка: ' + err.message));
- }, []);
+  const currentIngredient = useSelector(state => state.ingredientDetails.currentIngredient);
+  const ingredientDetailsVisible = useSelector(state => state.modals.ingredientDetailsVisible);
+  const orderVisible = useSelector(state => state.modals.orderVisible);
+  const order = useSelector(state => state.order.order);
+
+  useEffect(()=> {
+    dispatch(getIngredients())
+  }, [dispatch])
 
   const closeModal = () => {
-    setOrderVisible(false);
-    setIngredientVisible(false);
+    dispatch({ type: DELETE_INGREDIENT_DATA });
+    dispatch({ type: CLOSE_INGREDIENT_DETAILS });;
+    dispatch({ type: GET_ORDER_FAILED });
+    dispatch({ type: CLOSE_ORDER_DETAILS });
   };
 
   const openOrderModal = () => {
-    setOrderVisible(true);
+    dispatch({ type: OPEN_ORDER_DETAILS });
   };
 
   const openIngredientModal = (item) => {
-    setCurrentIngredient({...item});
-    setIngredientVisible(true);
+    dispatch({ type: ADD_INGREDIENT_DATA, item });
+    dispatch({ type: OPEN_INGREDIENT_DETAILS });
   }
 
-  const createOrder = (order) => {
-    getOrderNumber(order)
-      .then((data) => {
-        openOrderModal();
-        setOrderNumber(data);
-      })
-      .catch((err) => console.log(err));
+  const createOrder = (orderData) => {
+    dispatch(getOrder(orderData));
+    openOrderModal();
   };
 
   return (
     <div className="app">
-      <AppHeader />
-      <main className={styles.main}>
-        <IngredientsContext.Provider value={ingredients}>
-          <BurgerIngredients openModal={openIngredientModal}/>
-          <BurgerConstructor openOrderDetails={createOrder}/>
-        </IngredientsContext.Provider>
+      <DndProvider backend={HTML5Backend}>
+        <AppHeader />
+        <main className={styles.main}>
+          <BurgerIngredients openModal={openIngredientModal} />
+          <BurgerConstructor openOrderDetails={createOrder} />
         { Boolean(orderVisible) && 
           <Modal 
             header= { '' }
             onClose={ closeModal }
           >
-            <OrderDetails orderNumber={orderNumber}/>
+            <OrderDetails orderNumber={order.number}/>
             </Modal>
         }
-        { Boolean(ingredientVisible) && 
+        { Boolean(ingredientDetailsVisible) && 
           <Modal 
+            ingredient={ currentIngredient }
             header="Детали ингредиента"
             onClose={ closeModal }
           >
@@ -74,8 +88,9 @@ const App = () => {
           </Modal>
         }
       </main>
+      </DndProvider>
     </div>
   );
-}
+};
 
 export default App;

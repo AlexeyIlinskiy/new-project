@@ -7,9 +7,9 @@ import orderReducer from './order';
 import modalsReducer from './modals';
 
 export const rootReducer = combineReducers({
-  ingredientsReducer,
+  ingredients: ingredientsReducer,
   constructorReducer,
-  ingredientDetailsReducer,
-  orderReducer,
-  modalsReducer
+  ingredientDetails: ingredientDetailsReducer,
+  order: orderReducer,
+  modals: modalsReducer
 });

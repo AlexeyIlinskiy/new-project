@@ -12,7 +12,7 @@ const ingredientDetailsReducer = (state = initialIngredientState, action) => {
     case ADD_INGREDIENT_DATA: {
       return {
         ...state,
-        construcurrentIngredient: action.item
+        currentIngredient: action.item
         
       };
     }

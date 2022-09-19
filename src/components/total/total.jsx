@@ -1,60 +1,33 @@
-import { useContext, useReducer, useEffect } from "react"
 import styles from './total.module.css';
-
 import PropTypes from 'prop-types';
+import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useMemo } from 'react';
+import { useSelector } from 'react-redux';
 
-import { 
-  Button, 
-  CurrencyIcon
-} from '@ya.praktikum/react-developer-burger-ui-components';
-
-import { IngredientsContext } from "../../services/ingredientsContext";
-
-
-const initialState = {
-  total: 0
-}
-
-export default function Total ({openOrderDetails}) { 
-
-  const ingredients = useContext(IngredientsContext);
+export default function Total ({openOrderDetails}) {
+  const constructorIngredients = useSelector((store) => store.constructorReducer.constructorIngredients);
+  const bun = Boolean(constructorIngredients) && constructorIngredients.find((item) => item.type === 'bun');
   
-  const bun = ingredients.find((item) => item.type === 'bun');
-  const toppings = ingredients.filter(item => item.type === 'main' || item.type === 'sauce');
-  const total = toppings.length && toppings.reduce((total, current) => total + current.price, 0) + bun.price * 2;
-
-
-//создадим функцию редьюсер
-function reducer (state, action) {
-  switch(action.type) {
-    case 'TOTAL':
-      return { ...state, total};
-    default:
-      throw new Error(`Wrong type of action: ${action.type}`);
-    }
-  }
-
-const [state, dispatch] = useReducer(reducer, initialState);
-
-useEffect(() => {
-  dispatch (
-    {type: 'TOTAL'}
-  )
-}, [ingredients]);
-
+  const total = useMemo(() => {
+    return (
+      constructorIngredients.length ? constructorIngredients.reduce((total, current) => 
+      (current.type !== 'bun' ? total + current.price : total + current.price * 2), 0) : 0
+      );
+    }, [constructorIngredients]);
 
   return (
     <div className={`${styles.total} mt-10 pr-8`}>
       <span className={`${styles.totalSum} mr-10 text_type_digits-medium`}>
-        {state.total} 
+        {total} 
         <CurrencyIcon type="primary" />
       </span>
-      <Button type="primary" size="medium" onClick={ openOrderDetails }>
+      <Button type="primary" size="medium" onClick={ openOrderDetails } disabled={ !constructorIngredients.length || !bun }>
         Оформить заказ
       </Button>
     </div>
-  )    
-}
+  )  
+
+};
 
 Total.propTypes = { 
   openOrderDetails: PropTypes.func.isRequired,

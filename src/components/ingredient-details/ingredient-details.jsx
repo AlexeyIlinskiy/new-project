@@ -1,8 +1,10 @@
 import styles from './ingredient-details.module.css';
-
 import ingredientsTypes from '../../utils/types';
+import { useSelector } from 'react-redux';
 
-export default function IngredientDetails({ currentIngredient }) {
+export default function IngredientDetails() {
+
+  const currentIngredient = useSelector(state => state.ingredientDetails.currentIngredient);
 
   return (
     <section className={styles.root}>
