@@ -18,10 +18,10 @@ const constructorReducer = (state = initialConstructorState, action) => {
       };
     }
     case DELETE_INGREDIENT_FROM_CONSTRUCTOR: {
-      let itemToDeleteIndex = state.constructorIngredients.map(item => item._id).indexOf(action.id);
+      let itemToDeleteIndex = state.constructorIngredients.map(item => item.key).indexOf(action.id);
       return {
         ...state,
-        constructorIngredients: state.constructorIngredients.filter((item, index) => index !== itemToDeleteIndex )
+        constructorIngredients: [...state.constructorIngredients].filter((item, index) => index !== itemToDeleteIndex)
       };
     }
     case MOVE_INGREDIENT: {

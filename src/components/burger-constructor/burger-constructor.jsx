@@ -33,7 +33,7 @@ function BurgerConstructor ({ openOrderDetails }) {
             let id = burgerBun[0]._id;  
             dispatch({
               type: DELETE_INGREDIENT_FROM_CONSTRUCTOR,
-              id: id
+              id:{...item, key:uuidv4()}
             });
           }
           dispatch({

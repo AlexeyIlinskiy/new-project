@@ -17,7 +17,7 @@ const BurgerConstructorItem = React.memo((props) => {
 
     dispatch({
       type: DELETE_INGREDIENT_FROM_CONSTRUCTOR,
-      id: item._id
+      id: item.key
     })
   };
 
@@ -57,7 +57,7 @@ const BurgerConstructorItem = React.memo((props) => {
   const [{ isDragging }, drag] = useDrag({
     type: 'constructorIngredient',
     item: () => {
-      return { id: props.item._id, index: props.index };
+      return { id: props.item.key, index: props.index };
     },
     collect: (monitor) => ({
       isDragging: monitor.isDragging()
