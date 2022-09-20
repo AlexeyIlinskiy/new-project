@@ -44,7 +44,7 @@ function BurgerIngredient ({element, onClick}) {
 
 BurgerIngredient.propTypes = {
   element: PropTypes.oneOfType([PropTypes.object, ingredientsTypes]).isRequired,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired
 };
 
 export default BurgerIngredient;

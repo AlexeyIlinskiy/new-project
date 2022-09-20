@@ -3,14 +3,13 @@ import React from 'react';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
 import { DELETE_INGREDIENT_FROM_CONSTRUCTOR, moveItems } from '../../services/actions/constructor';
 
 const BurgerConstructorItem = React.memo((props) => {
 
   const dispatch = useDispatch();
-  const constructorIngredients = useSelector(store => store.constructorReducer.constructorIngredients);
 
   const deleteElement = (e, item) => {
     e.preventDefault();
@@ -66,8 +65,6 @@ const BurgerConstructorItem = React.memo((props) => {
 
   drag(drop(ref));
 
-
-
 return (
   <div className={`${styles.item} ${isDragging && styles.isDragging} mb-4`} 
     ref={ref}
@@ -84,6 +81,11 @@ return (
   </div>
 )
 });
+
+BurgerConstructorItem.propTypes = { 
+  image: PropTypes.string,
+  index: PropTypes.number.isRequired
+};
 
 export default BurgerConstructorItem;
 

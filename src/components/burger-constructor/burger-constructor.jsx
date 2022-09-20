@@ -30,15 +30,14 @@ function BurgerConstructor ({ openOrderDetails }) {
       if(item.type === 'bun') { 
         for(let i = 0; i < 2; i++) {
           if(burgerBun.length > 0) {
-            let id = burgerBun[0]._id;  
             dispatch({
               type: DELETE_INGREDIENT_FROM_CONSTRUCTOR,
-              id:{...item, key:uuidv4()}
+              id:'bun'
             });
           }
           dispatch({
             type: ADD_INGREDIENT_TO_CONSTRUCTOR,
-            draggedIngredient: {...item, key:uuidv4()}
+            draggedIngredient: {...item, key:'bun'}
           });
         }
       }
