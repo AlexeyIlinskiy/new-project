@@ -1,3 +1,3 @@
 ***react-burger***
 
-[Посмотреть сайт](https://github.com/AlexeyIlinskiy/react-burger "Необязательная подсказка")
+[Посмотреть сайт](https://alexeyilinskiy.github.io/react-burger/ "Учебный проект Ильинского Алексея")
