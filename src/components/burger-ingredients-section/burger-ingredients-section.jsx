@@ -1,34 +1,30 @@
 import styles from './burger-ingredients-section.module.css';
-
 import PropTypes from 'prop-types';
-import ingredientsTypes from '../../utils/types';
+import { forwardRef } from 'react';
+import { useSelector } from 'react-redux';
+import BurgerIngredient from '../burger-ingredient/burger-ingredient';
 
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+const BurgerIngredientsSection = forwardRef(({ type, name, onClick }, ref) => {
+  const ingredients = useSelector(state => state.ingredients.ingredients);
 
-function BurgerIngredientsSection(props) {
   return (
-    <>
-      <h2 className={`${styles.sectionTitle} text_type_main-medium mt-2 mb-6`}>{props.title}</h2>
-      <ul className={`${styles.cardContainer} pl-4 pr-2`}>
-        {
-          props.data.map((item) => (
-            <li key={item._id} className={`${styles.card} mb-8`} onClick={() => props.openModal(item)}>
-              <img src={item.image} alt={item.name}/>
-              <span className={`${styles.price} mt-2 mb-1 text_type_digits-default`}>
-                {item.price}
-                <CurrencyIcon type="primary" />
-              </span>
-              <p className={`${styles.name} text_type_main-default`}>{item.name}</p>
-            </li>
-          ))
-        }
-      </ul>
-    </>
+    (
+      <li ref={ ref }>
+        <h2 className='text text_type_main-medium text_color_primary'>{ name }</h2>
+        <div className={ styles.cardContainer }>
+          { ingredients && ingredients.filter(item => item.type === type).map((element, index) => (
+            <BurgerIngredient element={ element } onClick={() => onClick(element)} key={ element._id } />))}
+        </div>
+      </li>
+    )
   );
 }
+)
 
 BurgerIngredientsSection.propTypes = { 
-  data: PropTypes.arrayOf(ingredientsTypes).isRequired
+  type: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired
 };
 
 export default BurgerIngredientsSection;

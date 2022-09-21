@@ -1,66 +1,88 @@
-import React from 'react';
 import styles from './app.module.css';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
-import {api} from '../../utils/constants'
+ import {getIngredients} from '../../services/actions/ingredients';
+ 
+ import {
+  GET_ORDER_FAILED,
+  getOrder
+} from '../../services/actions/order';
 
-function App() {
-  const [apiData, setApiData] = React.useState([]);
-  const [orderVisible, setOrderVisible] = React.useState(false);
-  const [ingredientVisible, setIngredientVisible] = React.useState(false);
-  const [currentIngredient, setCurrentIngredient] = React.useState({});
+import {
+  ADD_INGREDIENT_DATA,
+  DELETE_INGREDIENT_DATA
+} from '../../services/actions/ingredient';
 
-  React.useEffect(() => {
-    fetch(api)
-        .then(res => {
-          if (res.ok) {
-              return res.json();
-          }
-          return Promise.reject(`Ошибка ${res.status}`);
-        })
-        .then(data => setApiData(data.data))
-        .catch(e => {
-          console.log('Error: ' + e.message);
-        });
-  }, []);
+import {
+  OPEN_INGREDIENT_DETAILS,
+  CLOSE_INGREDIENT_DETAILS,
+  OPEN_ORDER_DETAILS,
+  CLOSE_ORDER_DETAILS
+} from '../../services/actions/modals';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+
+const App = () => {
+  const dispatch = useDispatch();
+
+  const currentIngredient = useSelector(state => state.ingredientDetails.currentIngredient);
+  const ingredientDetailsVisible = useSelector(state => state.modals.ingredientDetailsVisible);
+  const orderVisible = useSelector(state => state.modals.orderVisible);
+  const order = useSelector(state => state.order.order);
+
+  useEffect(()=> {
+    dispatch(getIngredients())
+  }, [dispatch])
 
   const closeModal = () => {
-    setOrderVisible(false);
-    setIngredientVisible(false);
+    dispatch({ type: DELETE_INGREDIENT_DATA });
+    dispatch({ type: CLOSE_INGREDIENT_DETAILS });;
+    dispatch({ type: GET_ORDER_FAILED });
+    dispatch({ type: CLOSE_ORDER_DETAILS });
   };
 
   const openOrderModal = () => {
-    setOrderVisible(true);
+    dispatch({ type: OPEN_ORDER_DETAILS });
   };
 
   const openIngredientModal = (item) => {
-    setCurrentIngredient({...item});
-    setIngredientVisible(true);
+    dispatch({ type: ADD_INGREDIENT_DATA, item });
+    dispatch({ type: OPEN_INGREDIENT_DETAILS });
   }
+
+  const createOrder = (orderData) => {
+    dispatch(getOrder(orderData));
+    openOrderModal();
+  };
 
   return (
     <div className="app">
-      <AppHeader />
-      <main className={styles.main}>
-        <BurgerIngredients ingredients={apiData} openModal={openIngredientModal}/>
-        <BurgerConstructor ingredients={apiData} openModal={openOrderModal}/>
-        { orderVisible && 
+      
+        <AppHeader />
+        <main className={styles.main}>
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients openModal={openIngredientModal} />
+          <BurgerConstructor openOrderDetails={createOrder} />
+        </DndProvider>
+        { Boolean(orderVisible) && 
           <Modal 
             header= { '' }
             onClose={ closeModal }
           >
-            <OrderDetails />
+            <OrderDetails orderNumber={order.number}/>
             </Modal>
         }
-        { ingredientVisible && 
+        { Boolean(ingredientDetailsVisible) && 
           <Modal 
+            ingredient={ currentIngredient }
             header="Детали ингредиента"
             onClose={ closeModal }
           >
@@ -68,8 +90,9 @@ function App() {
           </Modal>
         }
       </main>
+      
     </div>
   );
-}
+};
 
 export default App;

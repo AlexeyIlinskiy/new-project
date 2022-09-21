@@ -1,0 +1,35 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 272px;
+  cursor: grab;
+}
+
+.card:hover{
+  opacity: 0.5;
+}
+
+.image {
+  width: 240px; 
+  height: 120px;
+  margin: 4px auto 4px;   
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  color: #F2F2F3;
+}
+
+.price svg {
+  margin-left: 9px;
+}
+
+.name {
+  margin: 0;
+  height: 48px;
+  text-align: center;
+  color: #F2F2F3;
+}
