@@ -1,6 +1,7 @@
 import styles from './app.module.css';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
@@ -10,6 +11,10 @@ import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
  import {getIngredients} from '../../services/actions/ingredients';
+ import LoginPage from '../../pages/login/login';
+ import RegisterPage from '../../pages/register/register';
+ import ForgotPasswordPage from '../../pages/forgot-password/forgot-password';
+ import ResetPasswordPage from '../../pages/reset-password/reset-password';
  
  import {
   GET_ORDER_FAILED,
@@ -65,10 +70,24 @@ const App = () => {
 
   return (
     <div className="app">
-      
         <AppHeader />
         <main className={styles.main}>
-        <DndProvider backend={HTML5Backend}>
+            <Router>
+              <Route path="/login" exact={true}>
+                <LoginPage />
+              </Route>
+              <Route path="/register" exact={true}>
+                <RegisterPage />
+              </Route>
+              <Route path="/forgot-password" exact={true}>
+                <ForgotPasswordPage />
+              </Route>
+              <Route path="/reset-password" exact={true}>
+                <ResetPasswordPage />
+              </Route>
+            </Router>
+
+        {/* <DndProvider backend={HTML5Backend}>
           <BurgerIngredients openModal={openIngredientModal} />
           <BurgerConstructor openOrderDetails={createOrder} />
         </DndProvider>
@@ -88,7 +107,7 @@ const App = () => {
           >
             <IngredientDetails currentIngredient={currentIngredient}/>
           </Modal>
-        }
+        } */}
       </main>
       
     </div>
