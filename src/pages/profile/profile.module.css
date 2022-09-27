@@ -1,0 +1,33 @@
+.root_container {
+  display: flex;
+  flex-direction : row;
+  align-items: flex-start;
+  justify-content:left;
+}
+
+.links_container {
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+}
+
+.active_link {
+  color: white;
+}
+
+.form_container {
+  margin-left: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  
+}
+
+.menu_item {
+  text-decoration: none;
+}

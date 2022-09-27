@@ -15,6 +15,7 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
  import RegisterPage from '../../pages/register/register';
  import ForgotPasswordPage from '../../pages/forgot-password/forgot-password';
  import ResetPasswordPage from '../../pages/reset-password/reset-password';
+ import ProfilePage from '../../pages/profile/profile';
  
  import {
   GET_ORDER_FAILED,
@@ -84,6 +85,9 @@ const App = () => {
               </Route>
               <Route path="/reset-password" exact={true}>
                 <ResetPasswordPage />
+              </Route>
+              <Route path="/profile" exact={true}>
+                <ProfilePage />
               </Route>
             </Router>
 
