@@ -7,7 +7,6 @@ import { Link, useHistory, useLocation, Redirect } from 'react-router-dom';
 
 import {sendPasswordEmail} from '../../services/actions/user';
 
-
 export function ForgotPasswordPage () {
   const { isAuth } = useSelector((store) => store.authReducer);
   const dispatch = useDispatch();
