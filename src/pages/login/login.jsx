@@ -1,38 +1,81 @@
 import styles from './login.module.css';
-import { 
-  EmailInput,
-  PasswordInput,
-  Button
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, Redirect, useLocation } from 'react-router-dom';
 
-import {Link} from 'react-router-dom';
 
-export default function LoginPage () {
+import { login } from '../../services/actions/user';
+
+export function LoginPage () {
+  const { isAuth } = useSelector((store) => store.authReducer);
+  const dispatch = useDispatch();
+  const location = useLocation();
+
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
+
+  const hadleChangeFormData = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  }
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    dispatch(login({ ...formData }));
+  }
+
+
+  if (isAuth) {
+    return (
+      <Redirect to={location.state?.from || "/"}/>
+    );
+  }
 
   return (
     <section className={styles.container}>
-        <h1 className="text text_type_main-medium">
+        <h1 className={`${styles.title} text_type_main-medium mb-6`}>
             Вход
         </h1>
-        <form className={styles.form}>
-        <div className="mt-6">
-            <EmailInput name={'email'} />
-        </div>
-        <div className="mt-6">
-            <PasswordInput name={'password'} />
-        </div>
-        <div className="mt-6">
-            <Button type="primary" size="medium">
-                Войти
-            </Button>
-        </div>
+        <form 
+          id="login-form" 
+          className={`${styles.form}`}
+          onSubmit={handleLogin}
+        >
+          <Input
+            type={'email'}
+            placeholder={'E-mail'}
+            onChange={hadleChangeFormData}
+            value={formData.email}
+            name={'email'}
+            error={false}
+            errorText={'Ошибка'}
+            size={'default'}
+          />
+          <Input
+            type={'password'}
+            placeholder={'Пароль'}
+            onChange={hadleChangeFormData}
+            value={formData.password}
+            name={'password'}
+            error={false}
+            errorText={'Ошибка'}
+            size={'default'}
+          />
+          <Button type="primary" size="medium">
+            Войти
+          </Button>
         </form>
-        <div className="mt-20 text text_color_inactive text_type_main-small">
+        <p className="mt-20 text text_color_inactive text_type_main-small">
             Вы — новый пользователь?<Link className={"ml-4 " + styles.link} to='/register'>Зарегистрироваться</Link>
-        </div>
-        <div className="mt-4 text text_color_inactive text_type_main-small">
+        </p>
+        <p className="mt-4 text text_color_inactive text_type_main-small">
             Забыли пароль?<Link className={"ml-4 " + styles.link} to='/forgot-password'>Восстановить пароль</Link>
-        </div>
+        </p>
     </section>
 )
 

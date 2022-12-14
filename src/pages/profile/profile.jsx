@@ -1,48 +1,108 @@
 import styles from './profile.module.css';
-import { 
-  Input,
-  PasswordInput,
-  EmailInput,
-  Button
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
-import {Link, NavLink} from 'react-router-dom';
+import { logout, updateUser } from '../../services/actions/user';
 
-export default function ProfilePage () {
+export function ProfilePage () {
+  const dispatch = useDispatch();
+  const { user } = useSelector((store) => store.authReducer);
+
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: ''
+  });
+
+  const [buttonsShow, setButtonsShow] = useState(false);
+
+  useEffect(() => {
+    setFormData({ ...user, password: '' });
+  }, []);
+
+  const hadleChangeFormData = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setButtonsShow(true);
+  };
+
+  const handleReset = () => {
+    setFormData({ ...user, name: '', email: '', password: '' });
+    setButtonsShow(false);
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
+  const handleUserUpdate = (e) => {
+    e.preventDefault();
+    dispatch(updateUser(formData));
+    setButtonsShow(true);
+  };
+
+  
   
   return (
-    <section className={`${styles.root_container} mt-30`}>
-      <div className={styles.links_container}>
-        <NavLink to="/profile"
-          exact
-          activeClassName={styles.active_link}
-          className={"text text_type_main-medium mt-5 text_color_inactive " + styles.menu_item}>Профиль</NavLink>
-        <NavLink to="/profile/orders"
-          exact
-          activeClassName={styles.active_link}
-          className={"text text_type_main-medium mt-10 text_color_inactive " + styles.menu_item}>История заказов</NavLink>
-        <NavLink to="/logout"
-          exact
-          activeClassName={styles.active_link}
-          className={"text text_type_main-medium mt-10 text_color_inactive " + styles.menu_item}>Выход</NavLink>
-        <div className="text text_type_main-small text_color_inactive mt-20">В этом разделе вы можете изменить свои персональные данные</div>
+    <section className={`${styles.container} pl-5 pt-20`}>
+      <div className={ `${styles.menu} mr-15` }>
+        <nav className={styles.nav}>
+          <NavLink to='/profile' exact={ true } className={ `${styles.link} text text_type_main-medium text_color_inactive`} activeClassName={ styles.linkActive }>
+            Профиль
+          </NavLink>
+          <NavLink to='/profile/orders' exact={ true } className={ `${styles.link} text text_type_main-medium text_color_inactive` } activeClassName={ styles.linkActive }>
+            История заказов
+          </NavLink>
+          <button type="button" className={ `${styles.link} text text_type_main-medium text_color_inactive` } onClick={ handleLogout }>
+            Выход
+          </button>
+        </nav>
+        <p className={`${styles.description} text text_type_main-default text_color_inactive`}>
+          В этом разделе вы можете изменить свои персональные данные
+        </p>
       </div>
-      <form className={styles.form_container}>
-        <Input
-          type={'text'}
-          placeholder={'Имя'}
-          name='name'
-        />
-        <EmailInput name={'email'} />
-        <PasswordInput name={'password'} />
+      <form className={`${styles.form} pt-20`} onSubmit={ handleUserUpdate }>
+      <Input
+            type={'text'}
+            placeholder={'Имя'}
+            onChange={hadleChangeFormData}
+            value={formData.name}
+            name={'name'}
+            error={false}
+            errorText={'Ошибка'}
+            size={'default'}
+          />
+          <Input
+            type={'email'}
+            placeholder={'E-mail'}
+            onChange={hadleChangeFormData}
+            value={formData.email}
+            name={'email'}
+            error={false}
+            errorText={'Ошибка'}
+            size={'default'}
+          />
+          <Input
+            type={'password'}
+            placeholder={'Пароль'}
+            onChange={hadleChangeFormData}
+            value={formData.password}
+            name={'password'}
+            error={false}
+            errorText={'Ошибка'}
+            size={'default'}
+          />
+        { buttonsShow && (
         <div className={styles.buttons}>
-          <Button type="secondary" htmlType="button" size="medium" >
+          <Button type="secondary" htmlType="button" size="medium" onClick={handleReset}>
             Отменить
           </Button>
           <Button type="primary" size="medium">
             Сохранить
           </Button>
         </div>
+        )}
       </form>
     </section>
   )

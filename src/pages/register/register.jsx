@@ -1,41 +1,91 @@
 import styles from './register.module.css';
-import {
-  Input,
-  EmailInput,
-  PasswordInput,
-  Button
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import {Link} from 'react-router-dom';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
 
-export default function RegisterPage () {
+import {register} from '../../services/actions/user';
+
+export function RegisterPage () {
+  const { isAuth } = useSelector((store) => store.authReducer);
+  const dispatch = useDispatch();
+
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: ''
+  });
+
+  const hadleChangeFormData = e => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  }
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    dispatch(register({ ...formData }));
+  }
+
+  if (isAuth) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/'
+        }}
+      />
+    );
+  }
 
   return (
     <section className={styles.container}>
-        <h1 className="text text_type_main-medium">
+        <h1 className={`${styles.title} text_type_main-medium mb-6`}>
             Регистрация
         </h1>
-        <form className={styles.form}>
-        <div className="mt-6">
-            <Input name={'name'} placeholder='Имя'/>
-        </div>
-        <div className="mt-6">
-            <EmailInput name={'email'} />
-        </div>
-        <div className="mt-6">
-            <PasswordInput name={'password'} />
-        </div>
-        <div className="mt-6">
-            <Button type="primary" size="medium">
-              Зарегистрироваться
-            </Button>
-        </div>
+        <form 
+          id="register-form" 
+          className={styles.form} 
+          onSubmit={handleRegister}
+          >
+        <Input
+            type={'text'}
+            placeholder={'Имя'}
+            onChange={hadleChangeFormData}
+            value={formData.name}
+            name={'name'}
+            error={false}
+            errorText={'Ошибка'}
+            size={'default'}
+          />
+          <Input
+            type={'email'}
+            placeholder={'E-mail'}
+            onChange={hadleChangeFormData}
+            value={formData.email}
+            name={'email'}
+            error={false}
+            errorText={'Ошибка'}
+            size={'default'}
+          />
+          <Input
+            type={'password'}
+            placeholder={'Пароль'}
+            onChange={hadleChangeFormData}
+            value={formData.password}
+            name={'password'}
+            error={false}
+            errorText={'Ошибка'}
+            size={'default'}
+          />
+          <Button type="primary" size="medium">
+            Зарегистироваться
+          </Button>
         </form>
-        <div className="mt-20 text text_color_inactive text_type_main-small">
+        <p className="mt-20 text text_color_inactive text_type_main-small">
             Вы уже зарегистрированы?<Link className={"ml-4 " + styles.link} to='/login'>Войти</Link>
-        </div>
+        </p>
     </section>
 )
-
-
 };

@@ -12,9 +12,13 @@ import { ADD_INGREDIENT_TO_CONSTRUCTOR,
 
 import Total from '../total/total';
 import BurgerConstructorItem from '../burger-constructor-item/burger-constructor-item';
+import { useHistory } from 'react-router-dom';
 
 function BurgerConstructor ({ openOrderDetails }) {
   const dispatch = useDispatch();
+  const history = useHistory();
+
+  const { isAuth } = useSelector((store) => store.authReducer);
   
   const constructorIngredients = useSelector((store) => store.constructorReducer.constructorIngredients);
   const burgerBun = constructorIngredients.filter((item) => item.type === 'bun');
@@ -51,7 +55,11 @@ function BurgerConstructor ({ openOrderDetails }) {
   });
 
   const openOrder = () => {
-    openOrderDetails(orderData);
+    if (isAuth) {
+      openOrderDetails(orderData);
+    } else {
+      history.push('/login');
+    }
   };
 
   return (

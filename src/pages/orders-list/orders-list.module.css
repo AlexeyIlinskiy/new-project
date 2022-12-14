@@ -8,7 +8,8 @@
 .menu {
   display: flex;
   flex-direction: column;
-  width: 320px;
+  max-width: 320px;
+  width: 100%;
   margin-top: 80px;
 }
 
@@ -17,29 +18,6 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-}
-
-.form {
-  width: 480px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  row-gap: 24px;
-}
-
-.buttons {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.resetButton {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-.resetButton:hover {
-  text-shadow: 0 0 10px #4c4cff;
 }
 
 .description {
