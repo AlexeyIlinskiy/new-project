@@ -6,6 +6,8 @@ import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 
+import { Link, useLocation } from 'react-router-dom';
+
 function BurgerIngredient ({element, onClick}) {
   const constructorIngredients = useSelector((store) => store.constructorReducer.constructorIngredients);
 
@@ -21,8 +23,18 @@ function BurgerIngredient ({element, onClick}) {
     item: element
   });
 
+  const location = useLocation();
+  const ingredientId = element._id;
+
   return (
-    
+    <Link
+      key={ ingredientId }
+      to={{
+        pathname: `/ingredients/${ingredientId}`,
+        state: { background: location },
+      }}
+      className={ styles.link }
+    >
     <div
       className={ styles.card }
       id={ element._id }
@@ -38,6 +50,7 @@ function BurgerIngredient ({element, onClick}) {
       </p>
       <p className={ `${styles.name} text_type_main-default` }>{ element.name }</p>
     </div>
+    </Link>
   );
 
 }

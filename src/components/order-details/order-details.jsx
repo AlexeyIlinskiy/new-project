@@ -1,8 +1,11 @@
 import styles from './order-details.module.css';
-import PropTypes from 'prop-types';
 import doneImg from '../../images/done.svg';
+import { useParams } from 'react-router';
 
-export default function OrderDetails({orderNumber}) {
+export default function OrderDetails() {
+
+  const {orderNumber} = useParams();
+  
   return (
     <section className={`${styles.root}`}>
       <span className={`${styles.title} text_type_digits-large mt-4 mb-8`}>{orderNumber}</span>
@@ -12,8 +15,4 @@ export default function OrderDetails({orderNumber}) {
       <p className={`${styles.orderInfo} ${styles.textColor} text_type_main-default mb-2`}>Дождитесь готовности на орбитальной станции</p>
     </section>
   )
-};
-
-OrderDetails.propTypes = {
-  orderNumber: PropTypes.number,
 };

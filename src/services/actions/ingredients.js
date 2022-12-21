@@ -1,4 +1,4 @@
-import { getIngredientsApi } from "../../utils/burger-api";
+import { getIngredientsApi } from "../../utils/api";
 //Получение ингредиентов с сервера
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';

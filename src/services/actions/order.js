@@ -1,4 +1,4 @@
-import { getOrderNumber } from "../../utils/burger-api";
+import { getOrderNumber } from "../../utils/api";
 
 //Получение заказа с сервера
 export const GET_ORDER_REQUEST = 'GET_ORDER_REQUEST';
