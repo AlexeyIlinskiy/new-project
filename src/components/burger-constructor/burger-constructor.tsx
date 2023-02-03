@@ -52,7 +52,7 @@ const BurgerConstructor: FC<IBurgerConstructor> = ({ openOrderDetails }) => {
 
   const openOrder = () => {
     if (isAuth) {
-      openOrderDetails(constructorIngredients);
+      openOrderDetails(orderData as TIngredient[]);
     } else {
       history.push('/login');
     }
