@@ -5,16 +5,17 @@ import { TIngredient } from '../../services/types/data';
 
 import BurgerIngredientsSection from '../burger-ingredients-section/burger-ingredients-section'
 
-interface IBurgerIngredients {
+type TBurgerIngredients = {
   openModal: (element: TIngredient) => void;
-}
+};
 
-const BurgerIngredients: FC<IBurgerIngredients> = ({openModal}) => {
+const BurgerIngredients: FC<TBurgerIngredients> = ({openModal}) => {
   
   const bunRef = useRef<HTMLLIElement>(null);
   const sauceRef = useRef<HTMLLIElement>(null);
   const mainRef = useRef<HTMLLIElement>(null);
   const scrollRef = useRef<HTMLUListElement>(null);
+
   const [current, setCurrent] = useState<string>('Булки');
 
   const switchTabs = (value: string) => {

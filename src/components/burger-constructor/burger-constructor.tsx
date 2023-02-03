@@ -14,11 +14,11 @@ import BurgerConstructorItem from '../burger-constructor-item/burger-constructor
 import { useHistory } from 'react-router-dom';
 import { TIngredient } from '../../services/types/data';
 
-interface IBurgerConstructorProps {
+interface IBurgerConstructor {
   openOrderDetails: (order: ReadonlyArray<TIngredient>) => void,
 }
 
-const BurgerConstructor: FC<IBurgerConstructorProps> = ({ openOrderDetails }) => {
+const BurgerConstructor: FC<IBurgerConstructor> = ({ openOrderDetails }) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -38,7 +38,7 @@ const BurgerConstructor: FC<IBurgerConstructorProps> = ({ openOrderDetails }) =>
       if(item.type === 'bun') { 
         for(let i = 0; i < 2; i++) {
           if(burgerBun.length > 0) {
-            let id = burgerBun[0]._id;
+            let id = 'bun';
             dispatch(deleteIngredientFromConstructor(id));
           }
           dispatch(addIngredientToConstructor({...item, key:'bun'}));
@@ -79,7 +79,7 @@ const BurgerConstructor: FC<IBurgerConstructorProps> = ({ openOrderDetails }) =>
         <div className={`${styles.scrollable} mb-4 pr-4`}>
         {
             constructorIngredients.map((item: TIngredient, index: number) => item.type !== 'bun' && (
-                <BurgerConstructorItem item={item} key= { item.key } index={index}/>
+                <BurgerConstructorItem item={item} key={ item.key } index={index}/>
               )
             )
           }

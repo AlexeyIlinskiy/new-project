@@ -8,7 +8,7 @@ import {
 } from '../constants/constructor';
 
 type TInitialConstructorState = {
-  constructorIngredients: ReadonlyArray<TIngredient>
+  constructorIngredients: TIngredient[]
 }
 const initialConstructorState: TInitialConstructorState = {
   constructorIngredients: [],
@@ -24,7 +24,7 @@ const constructorReducer = (state = initialConstructorState, action: TActions) =
       };
     }
     case DELETE_INGREDIENT_FROM_CONSTRUCTOR: {
-      let itemToDeleteIndex = state.constructorIngredients.map(item => item.key).indexOf(action.id);
+      let itemToDeleteIndex = state.constructorIngredients.map(item => item.key as string).indexOf(action.id);
       return {
         ...state,
         constructorIngredients: [...state.constructorIngredients].filter((item, index) => index !== itemToDeleteIndex)

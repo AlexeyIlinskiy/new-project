@@ -1,5 +1,5 @@
 import styles from './app.module.css';
-import { useEffect, useState, FC} from 'react';
+import { useEffect, useState} from 'react';
 import { useSelector, useDispatch } from '../../services/hooks/hooks';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
  

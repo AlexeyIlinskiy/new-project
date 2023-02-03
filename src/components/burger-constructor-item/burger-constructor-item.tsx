@@ -16,7 +16,7 @@ const BurgerConstructorItem: FC<IBurgerConstructorItemProps> = memo(({ item, ind
   const dispatch = useDispatch();
 
   const deleteElement = (item: TIngredient) => {
-    dispatch(deleteIngredientFromConstructor(item._id))
+    dispatch(deleteIngredientFromConstructor(item.key as string))
   };
 
   const ref = useRef<HTMLDivElement | null>(null);
@@ -55,7 +55,7 @@ const BurgerConstructorItem: FC<IBurgerConstructorItemProps> = memo(({ item, ind
   const [{ isDragging }, drag] = useDrag({
     type: 'constructorIngredient',
     item: () => {
-      return { id: item._id, index: index };
+      return { id: item.key, index: index };
     },
     collect: (monitor) => ({
       isDragging: monitor.isDragging()

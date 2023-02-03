@@ -19,7 +19,7 @@ const BurgerIngredientsSection = forwardRef<HTMLLIElement, IBurgerIngredientsSec
       <li ref={ ref }>
         <h2 className='text text_type_main-medium text_color_primary'>{ name }</h2>
         <div className={ styles.cardContainer }>
-          { ingredients && ingredients.filter(item => item.type === type).map((element, index) => (
+          { ingredients && ingredients.filter((item:TIngredient) => item.type === type).map((element: TIngredient) => (
             <BurgerIngredient element={ element } onClick={() => onClick(element)} key={ element._id } />))}
         </div>
       </li>
