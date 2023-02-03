@@ -9,8 +9,8 @@ import { addIngredientToConstructor,
   deleteIngredientFromConstructor }
   from '../../services/actions/constructorActions';
 
-import Total from '../total/total';
-import BurgerConstructorItem from '../burger-constructor-item/burger-constructor-item';
+import { Total } from '../total/total';
+import { BurgerConstructorItem } from '../burger-constructor-item/burger-constructor-item';
 import { useHistory } from 'react-router-dom';
 import { TIngredient } from '../../services/types/data';
 

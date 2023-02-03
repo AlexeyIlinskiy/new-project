@@ -3,12 +3,10 @@ import { Action, ActionCreator } from 'redux';
 import { TActions } from '../actions';
 import { store } from "../store";
 
-type TApplicationActions = TActions;
-
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 export type AppThunk<ReturnType = void> = ActionCreator<
-  ThunkAction<ReturnType, Action, RootState, TApplicationActions>
+  ThunkAction<ReturnType, Action, RootState, TActions>
 >;
   
 export type TIngredient = {

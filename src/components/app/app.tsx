@@ -42,7 +42,6 @@ const App = () => {
   const history = useHistory();
   const background = location.state?.background;
  
-  const currentIngredient = useSelector(state => state.ingredientDetails.currentIngredient);
   const order = useSelector(state => state.order.order);
 
   const { isAuth } = useSelector((store) => store.authReducer);

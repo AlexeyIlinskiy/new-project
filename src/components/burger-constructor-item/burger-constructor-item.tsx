@@ -11,7 +11,7 @@ interface IBurgerConstructorItemProps {
   index: number;
 }
 
-const BurgerConstructorItem: FC<IBurgerConstructorItemProps> = memo(({ item, index}) => {
+export const BurgerConstructorItem: FC<IBurgerConstructorItemProps> = memo(({ item, index}) => {
 
   const dispatch = useDispatch();
 
@@ -80,6 +80,4 @@ return (
   </div>
 )
 });
-
-export default BurgerConstructorItem;
 

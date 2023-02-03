@@ -1,6 +1,7 @@
 import { getCookie } from './cookies';
-const api = 'https://norma.nomoreparties.space/api';
 import { TIngredient, TProfileForm } from '../services/types/data';
+
+const api = 'https://norma.nomoreparties.space/api';
 
 export type TRequestOptions = {
   method?: 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';

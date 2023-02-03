@@ -4,11 +4,11 @@ import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-co
 import { useSelector } from '../../services/hooks/hooks';
 import { TIngredient } from '../../services/types/data';
 
-interface ITotalProps {
+interface ITotal {
   openOrderDetails: () => void;
 }
 
-const Total: FC<ITotalProps> = ({openOrderDetails}) => {
+export const Total: FC<ITotal> = ({openOrderDetails}) => {
   const constructorIngredients = useSelector((store) => store.constructorReducer.constructorIngredients);
   const bun = Boolean(constructorIngredients) && constructorIngredients.find((item:TIngredient) => item.type === 'bun');
 
@@ -28,5 +28,3 @@ const Total: FC<ITotalProps> = ({openOrderDetails}) => {
     </div>
   )  
 };
-
-export default Total;
