@@ -1,3 +1,0 @@
-//Детали ингредиента
-export const ADD_INGREDIENT_DATA = 'SET_CURRENT_INGREDIENT';
-export const DELETE_INGREDIENT_DATA = 'DELETE_CURRENT_INGREDIENT';
